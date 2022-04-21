@@ -1,6 +1,7 @@
 package io.seata.sample.service;
 
 import java.math.BigDecimal;
+import java.util.Enumeration;
 
 import io.seata.sample.entity.Order;
 import io.seata.sample.feign.AccountFeignClient;
@@ -8,6 +9,8 @@ import io.seata.sample.repository.OrderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Description：
@@ -40,5 +43,13 @@ public class OrderService {
         accountFeignClient.debit(userId, orderMoney);
 
     }
-
+    public void showHTTPHeaders(HttpServletRequest request) {
+        Enumeration<String> headers = request.getHeaderNames();
+        System.out.print("print Headers start \n");
+        while (headers.hasMoreElements()) {
+            String header = headers.nextElement();
+            System.out.printf("Header name : <%s>, value: <%s> \n", header , request.getHeader(header));
+        }
+        System.out.print("print Headers end \n");
+    }
 }
